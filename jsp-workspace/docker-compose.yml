@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  jsp-dev:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./ROOT:/usr/local/tomcat/webapps/ROOT
+    environment:
+      CATALINA_OPTS: "-XX:+UnlockDiagnosticVMOptions -XX:-UseContainerSupport"

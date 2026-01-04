@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>填写注册信息</title>
+    <style>
+        .title{font-size: 20px; text-align: center; font-family: "微软雅黑", "Microsoft YaHei", sans-serif; color: #e77000
+        ;}
+        body { font-family: "微软雅黑", "Microsoft YaHei", sans-serif; margin: 20px; font-weight: normal; }
+        .container { padding: 20px; }
+        h1 { text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 10px; text-align: left; }
+        .button-group { text-align: center; }
+        label { display: inline-block; width: 80px; font-weight: normal; }
+        .hint-text { display: inline-block; font-weight: normal; margin-left: 50px; color: blue; }
+        .other-text { display: inline-block; font-weight: normal; }
+        input[type="radio"] + .hint-text { margin-left: 168px; }
+        input, select { padding: 5px; margin: 2px; }
+        textarea { padding: 5px; margin: 2px; width: 475px; height: 80px; vertical-align: top; }
+        textarea + label { vertical-align: top; }
+        .form-group:has(textarea) label { vertical-align: top; }
+        .error { color: rgb(14, 0, 0); font-size: 12px; display: none; }
+        .required { color: rgb(10, 0, 0); }
+    </style>
+</head>
+<body>
+    <div class="title"><b>填写注册信息</b></div>
+
+    <form id="studentForm" name="studentRegistration"
+          method="POST" action="http://localhost:8080/javaWeb/ch">
+
+        <div class="form-group">
+            <label>用户名:<span class="required">*</span></label>
+            <input type="text" id="name" name="name" required>
+            <span class="hint-text">   用户名由字母开头，后跟字母、数字、长度是3～8个字符！</span>
+            <span class="error" id="nameError">请输入你的真实姓名！</span>
+        </div>
+
+        <div class="form-group">
+            <label>密码:<span class="required">*</span></label>
+            <input type="password" id="password" name="password" required minlength="6">
+            <span class="hint-text">   设置登录密码，至少6位！</span>
+            <span class="error" id="passwordError">密码至少6位</span>
+        </div>
+
+        <div class="form-group">
+            <label>确认密码:<span class="required">*</span></label>
+            <input type="password" id="password" name="password" required minlength="6">
+            <span class="hint-text">   请再输入一次你的密码！</span>
+            <span class="error" id="passwordError">密码至少6位</span>
+        </div>
+
+        <div class="form-group">
+            <label>性别:<span class="required">*</span></label>
+            <input type="radio" name="gender" value="male" required>男
+            <input type="radio" name="gender" value="female" required>女
+            <span class="hint-text">请选择你的性别！</span>
+            <span class="error" id="genderError">请选择性别</span>
+        </div>
+
+        <div class="form-group">
+            <label>联系电话:<span class="required">*</span></label>
+            <input type="text" id="email" name="email" required>
+            <span class="hint-text">请输入您的常用邮箱，可以用此邮箱找回密码！</span>
+        <span class="error" id="schoolError">请输入邮箱</span>
+        </div>
+
+        <div class="form-group">
+            <label>基本概况:</label>
+            <textarea id="basicinfo" name="basicinfo"></textarea>
+        </div>
+
+        <input type="hidden" name="formType" value="studentRegistration">
+        <input type="hidden" name="timestamp" id="timestamp">
+
+        <div class="form-group button-group">
+            <input type="checkbox" id="agreement" name="agreement" required>
+            <span class="other-text">我已经仔细阅读并同意接受用户使用协议</span>
+            <span class="error" id="agreementError">请同意用户使用协议</span>
+        </div>
+
+        <div class="form-group button-group">
+            <button type="submit">确认</button>
+            <button type="button" id="cancelBtn">取消</button>
+        </div>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('studentForm');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const timestampInput = document.getElementById('timestamp');
+
+            timestampInput.value = new Date().toISOString();
+
+            function validateForm() {
+                let isValid = true;
+
+                const name = document.getElementById('name');
+                const nameError = document.getElementById('nameError');
+                if (!name.value.trim()) {
+                    nameError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    nameError.style.display = 'none';
+                }
+
+                const password = document.getElementById('password');
+                const passwordError = document.getElementById('passwordError');
+                if (password.value.length < 6) {
+                    passwordError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    passwordError.style.display = 'none';
+                }
+
+                const genderRadios = document.querySelectorAll('input[name="gender"]');
+                const genderError = document.getElementById('genderError');
+                let genderSelected = false;
+                for (let radio of genderRadios) {
+                    if (radio.checked) {
+                        genderSelected = true;
+                        break;
+                    }
+                }
+                if (!genderSelected) {
+                    genderError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    genderError.style.display = 'none';
+                }
+
+                const birthdate = document.getElementById('birthdate');
+                const birthdateError = document.getElementById('birthdateError');
+                if (!birthdate.value) {
+                    birthdateError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    birthdateError.style.display = 'none';
+                }
+
+                const school = document.getElementById('school');
+                const schoolError = document.getElementById('schoolError');
+                if (!school.value.trim()) {
+                    schoolError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    schoolError.style.display = 'none';
+                }
+
+                const major = document.getElementById('major');
+                const majorError = document.getElementById('majorError');
+                if (!major.value) {
+                    majorError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    majorError.style.display = 'none';
+                }
+
+                const agreement = document.getElementById('agreement');
+                const agreementError = document.getElementById('agreementError');
+                if (!agreement.checked) {
+                    agreementError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    agreementError.style.display = 'none';
+                }
+
+                return isValid;
+            }
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                if (validateForm()) {
+                    if (confirm('确认提交学生信息吗？')) {
+                        form.submit();
+                    }
+                }
+            });
+
+            cancelBtn.addEventListener('click', function() {
+                if (confirm('确定要取消吗？所有信息将被清空。')) {
+                    form.reset();
+                    const errors = document.querySelectorAll('.error');
+                    errors.forEach(error => error.style.display = 'none');
+                    timestampInput.value = new Date().toISOString();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

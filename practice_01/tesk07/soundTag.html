@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { padding: 20px; font-family: 'Microsoft YaHei', sans-serif; }
+        .audio-container {
+            margin-top: 50px;
+            text-align: center;
+        }
+        audio {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .audio-info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="audio-container">
+        <h2>音乐播放器</h2>
+        <audio controls>
+            <source src="sample.mp3" type="audio/mpeg">
+            您的浏览器不支持音频播放。
+        </audio>
+        <div class="audio-info">
+            <p>请将您的音频文件命名为 "sample.mp3" 并放置在此目录下</p>
+        </div>
+    </div>
+</body>
+</html>

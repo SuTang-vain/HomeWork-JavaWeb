@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { padding: 20px; font-family: 'Microsoft YaHei' }
+        a {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 18px;
+            text-decoration: none;
+        }
+        .menu-link { color: #0000FF; }
+        .active { color: #800080 !important; }
+    </style>
+    <script>
+        window.onload = function() {
+            var links = document.querySelectorAll('.menu-link');
+
+            links.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    links.forEach(function(l) {
+                        l.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    sessionStorage.setItem('currentPage', this.id);
+                });
+            });
+
+            var currentPage = sessionStorage.getItem('currentPage');
+            if (currentPage) {
+                var activeLink = document.getElementById(currentPage);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+    <a href="imgTag.html" target="rightFrame" id="img-link" class="menu-link">图像显示</a>
+    <a href="videoTag.html" target="rightFrame" id="video-link" class="menu-link">视频播放</a>
+    <a href="soundTag.html" target="rightFrame" id="music-link" class="menu-link">音乐播放</a>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息注册</title>
+    <style>
+        body { font-family: "SimSun", "宋体", serif; margin: 20px; font-weight: normal; }
+        .container { padding: 20px; }
+        h1 { text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 10px; text-align: left; }
+        label { display: inline-block; width: 80px; font-weight: normal; }
+        input, select, textarea { padding: 5px; margin: 2px; }
+        .error { color: red; font-size: 12px; display: none; }
+        .required { color: red; }
+    </style>
+</head>
+<body>
+    <h1>学生信息注册</h1>
+
+    <form id="studentForm" name="studentRegistration"
+          method="POST" action="http://localhost:8080/javaWeb/ch">
+
+        <div class="form-group">
+            <label>姓名:</label>
+            <input type="text" id="name" name="name" required>
+            <span class="error" id="nameError">请输入姓名</span>
+        </div>
+
+        <div class="form-group">
+            <label>性别:</label>
+            <input type="radio" name="gender" value="male" required>男
+            <input type="radio" name="gender" value="female" required>女
+            <span class="error" id="genderError">请选择性别</span>
+        </div>
+
+        <div class="form-group">
+            <label>出生日期:</label>
+            <input type="text" id="birthdate" name="birthdate" required placeholder="">
+            <span style="font-size: 12px; color: #666;">按格式yyyy-mm-dd</span>
+            <span class="error" id="birthdateError"></span>
+        </div>
+
+        <div class="form-group">
+            <label>学校:</label>
+            <input type="text" id="school" name="school" required>
+            <span class="error" id="schoolError">请输入学校名称</span>
+        </div>
+
+        <div class="form-group">
+            <label>专业:</label>
+            <select id="major" name="major" required>
+                <option value="">请选择专业</option>
+                <option value="cs">计算机科学与技术</option>
+                <option value="se">软件工程</option>
+                <option value="is">信息安全</option>
+                <option value="ne">网络工程</option>
+            </select>
+            <span class="error" id="majorError">请选择专业</span>
+        </div>
+
+        <div class="form-group">
+            <label>体育特长:</label>
+            <input type="checkbox" name="sports" value="basketball">篮球
+            <input type="checkbox" name="sports" value="volleyball">排球
+            <input type="checkbox" name="sports" value="football">足球
+            <input type="checkbox" name="sports" value="swimming">游泳
+        </div>
+
+        <div class="form-group">
+            <label>上传照片:</label>
+            <input type="file" id="photo" name="photo" accept="image/*">
+        </div>
+
+        <div class="form-group">
+            <label>密码:</label>
+            <input type="password" id="password" name="password" required minlength="6">
+            <span class="error" id="passwordError">密码至少6位</span>
+        </div>
+
+        <div class="form-group">
+            <label>个人介绍:</label>
+            <textarea id="introduction" name="introduction"></textarea>
+        </div>
+
+        <input type="hidden" name="formType" value="studentRegistration">
+        <input type="hidden" name="timestamp" id="timestamp">
+
+        <div class="form-group">
+            <button type="submit">提交</button>
+            <button type="but <input type="text" id="birthdate" name="birthdate" required placeholder=""><ton" id="cancelBtn">取消</button>
+        </div>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('studentForm');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const timestampInput = document.getElementById('timestamp');
+
+            timestampInput.value = new Date().toISOString();
+
+            function validateForm() {
+                let isValid = true;
+
+                const name = document.getElementById('name');
+                const nameError = document.getElementById('nameError');
+                if (!name.value.trim()) {
+                    nameError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    nameError.style.display = 'none';
+                }
+
+                const password = document.getElementById('password');
+                const passwordError = document.getElementById('passwordError');
+                if (password.value.length < 6) {
+                    passwordError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    passwordError.style.display = 'none';
+                }
+
+                const genderRadios = document.querySelectorAll('input[name="gender"]');
+                const genderError = document.getElementById('genderError');
+                let genderSelected = false;
+                for (let radio of genderRadios) {
+                    if (radio.checked) {
+                        genderSelected = true;
+                        break;
+                    }
+                }
+                if (!genderSelected) {
+                    genderError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    genderError.style.display = 'none';
+                }
+
+                const birthdate = document.getElementById('birthdate');
+                const birthdateError = document.getElementById('birthdateError');
+                if (!birthdate.value) {
+                    birthdateError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    birthdateError.style.display = 'none';
+                }
+
+                const school = document.getElementById('school');
+                const schoolError = document.getElementById('schoolError');
+                if (!school.value.trim()) {
+                    schoolError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    schoolError.style.display = 'none';
+                }
+
+                const major = document.getElementById('major');
+                const majorError = document.getElementById('majorError');
+                if (!major.value) {
+                    majorError.style.display = 'inline';
+                    isValid = false;
+                } else {
+                    majorError.style.display = 'none';
+                }
+
+                return isValid;
+            }
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                if (validateForm()) {
+                    if (confirm('确认提交学生信息吗？')) {
+                        form.submit();
+                    }
+                }
+            });
+
+            cancelBtn.addEventListener('click', function() {
+                if (confirm('确定要取消吗？所有信息将被清空。')) {
+                    form.reset();
+                    const errors = document.querySelectorAll('.error');
+                    errors.forEach(error => error.style.display = 'none');
+                    timestampInput.value = new Date().toISOString();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

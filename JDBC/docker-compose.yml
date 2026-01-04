@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # MySQL数据库服务
+  mysql:
+    image: mysql:8.0
+    container_name: jdbc-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: testdb
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - mysql-data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p123456"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - jdbc-network
+
+  # JSP (Tomcat) 服务
+  tomcat:
+    image: tomcat:9-jdk11-openjdk
+    container_name: jdbc-tomcat
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./webapps:/usr/local/tomcat/webapps/ROOT
+    environment:
+      CATALINA_OPTS: "-XX:+UnlockDiagnosticVMOptions -XX:-UseContainerSupport"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - jdbc-network
+
+volumes:
+  mysql-data:
+
+networks:
+  jdbc-network:
+    driver: bridge

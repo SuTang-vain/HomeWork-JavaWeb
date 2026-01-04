@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>下拉菜单</title>
+    <style>
+        .main-menu {
+            width: 800px;
+            height: 40px;
+            background-color: #7e7cff;
+            margin: 0;
+            position: relative;
+        }
+        .menu-item {
+            display: inline-block;
+            padding: 0 30px;
+            line-height: 40px;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+        }
+        .dropdown {
+            position: absolute;
+            background-color: #7e7cff;;
+            display: none;
+            z-index: 1000;
+        }
+        .dropdown-item {
+            padding: 8px 30px;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+        }
+        .dropdown-item:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-menu">
+        <span class="menu-item" onmouseover="show('menu1')" onmouseout="hide()">系列课程</span>
+        <span class="menu-item" onmouseover="show('menu2')" onmouseout="hide()">教学课件</span>
+        <span class="menu-item" onmouseover="show('menu3')" onmouseout="hide()">课程大纲</span>
+    </div>
+
+    <div id="menu1" class="dropdown" style="left: 0px; top: 40px;">
+        <div class="dropdown-item">C++程序设计</div>
+        <div class="dropdown-item">Java程序设计</div>
+        <div class="dropdown-item">C#程序设计</div>
+    </div>
+
+    <div id="menu2" class="dropdown" style="left: 120px; top: 40px;">
+        <div class="dropdown-item">C++课件</div>
+        <div class="dropdown-item">Java课件</div>
+        <div class="dropdown-item">C#课件</div>
+    </div>
+
+    <div id="menu3" class="dropdown" style="left: 240px; top: 40px;">
+        <div class="dropdown-item">C++教学大纲</div>
+        <div class="dropdown-item">Java教学大纲</div>
+        <div class="dropdown-item">C#教学大纲</div>
+    </div>
+
+    <script>
+        function show(menuId) {
+            document.getElementById('menu1').style.display = 'none';
+            document.getElementById('menu2').style.display = 'none';
+            document.getElementById('menu3').style.display = 'none';
+
+            var menuMap = {
+                'menu1': 0,       
+                'menu2': 120,     
+                'menu3': 240      
+            };
+
+            var dropdown = document.getElementById(menuId);
+            dropdown.style.left = menuMap[menuId] + 'px';
+            dropdown.style.top = '40px';
+
+            dropdown.style.display = 'block';
+        }
+
+    </script>
+</body>
+</html>

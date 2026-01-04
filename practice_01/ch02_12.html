@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表格变色效果</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 300px;
+            margin: 50px auto;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #e6f3ff;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>学校</th>
+                <th>专业</th>
+                <th>人数</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr onmouseover="changeColor(this)" onmouseout="resetColor(this)">
+                <td>北大</td>
+                <td>法律</td>
+                <td>2000</td>
+            </tr>
+            <tr onmouseover="changeColor(this)" onmouseout="resetColor(this)">
+                <td>清华</td>
+                <td>计算机</td>
+                <td>5000</td>
+            </tr>
+            <tr onmouseover="changeColor(this)" onmouseout="resetColor(this)">
+                <td>人大</td>
+                <td>经济</td>
+                <td>6000</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function changeColor(row) {
+            row.style.backgroundColor = '#c3e7ff';
+        }
+
+        function resetColor(row) {
+            row.style.backgroundColor = '';
+        }
+    </script>
+</body>
+</html>
