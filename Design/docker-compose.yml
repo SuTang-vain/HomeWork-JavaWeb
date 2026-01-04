@@ -6,7 +6,7 @@ services:
     ports:
       - "8090:8080"
     volumes:
-      - ./webapps:/usr/local/tomcat/webapps/ROOT
+      - ./webapps:/usr/local/tomcat/webapps
     depends_on:
       - mysql-db
 
@@ -17,6 +17,8 @@ services:
       MYSQL_DATABASE: user
       MYSQL_USER: user
       MYSQL_PASSWORD: password
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
     ports:
       - "3306:3306"
     volumes:
