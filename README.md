@@ -8,12 +8,14 @@
 
 | 目录 | 说明 |
 |------|------|
-| `Design/` | 设计模式 示例代码 |
+| `Design/` | 设计模式示例代码 |
 | `JavaBean/` | JavaBean 示例代码 |
 | `JDBC/` | JDBC 数据库操作示例 |
 | `Jsp/` | JSP 示例项目 |
 | `Static/` | 静态页面练习 |
-| `Java_Web_zip/` | 归档的zip文件 |
+| `Java_Web_zip/` | 归档的 zip 文件 |
+| `课程PPT源文件/` | 课程 PPT 课件 |
+| `课程实践要求/` | 课程实验要求文档 |
 
 ## 文档
 
