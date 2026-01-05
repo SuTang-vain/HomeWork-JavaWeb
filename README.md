@@ -8,12 +8,12 @@
 
 | 目录 | 说明 |
 |------|------|
-| `Design/` | Tomcat + MySQL Docker 环境 |
+| `Design/` | 设计模式 示例代码 |
 | `JavaBean/` | JavaBean 示例代码 |
 | `JDBC/` | JDBC 数据库操作示例 |
-| `Jsp/` | JSP 练习项目（原 jsp-workspace） |
-| `Static/` | 静态页面练习（原 practice_01） |
-| `Java_Web_zip/` | 归档的课程资料 |
+| `Jsp/` | JSP 示例项目 |
+| `Static/` | 静态页面练习 |
+| `Java_Web_zip/` | 归档的zip文件 |
 
 ## 文档
 
